@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.image img{
+	width: 100%;
+	height: 0px auto;
+	opacity: 0.80;
+}
+.yellow-space{
+    height: 100px;
+    width: 100%;
+    background: #E5DAA0;
+    padding: 10px 50px 20px;
+}
+body{
+    background: #E5DAA0;
+}
+.img-chiquita{
+    height: 100px;
+    width: 100%;
+    padding: 10px 50px 20px;
+}
