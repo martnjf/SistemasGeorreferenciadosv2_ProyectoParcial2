@@ -7,23 +7,16 @@ body{
   background-color: #E5DAA0;
 }
 
-#main-div{
-  margin-left: 20%;
-  margin-right: 20%;
+.main-div{
+  height: 90vh;
   display: flex;
-  flex-direction: column;
-
-}
-
-#main-div{
-  margin-left: 20%;
-  margin-right: 20%;
-
+  justify-content: center;
+  align-items: center;
 }
 
 .top-image{
-  width:200px;
-  height:200px;
+  width:150px;
+  height:150px;
   object-fit:cover;
   border-radius:50%;
 
