@@ -2,29 +2,36 @@
 * {
     margin: 0;
     padding: 0;
+}
+
+body{
     background: #E5DAA0;
 }
+
 .textito{
     font-family: 'Rampart One', cursive;
     text-align: center;
 }
+
 .spaces{
     padding: 30px 20px 30px 20px;
 }
+
 .spaces-2{
     padding: 3% 0;
     background-color: #DFD189;
 }
+
 .img-chiquita{
-    height: 184px;
-    width: 537px;
-    padding: 15px 20px 15px 20px;
+    max-width: 100%;
+
 }
-.image img{
-	width: 100%;
-	height: 0px auto;
-	opacity: 0.80;
+
+.div-info{
+    padding: 0;
+    margin: 0;
 }
+
 .yellow-space{
     height: 100px;
     width: 100%;
