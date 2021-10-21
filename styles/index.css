@@ -13,16 +13,12 @@ body{
     text-align: center;
 }
 
-.spaces{
-    padding: 30px 20px 30px 20px;
-}
-
 .spaces-2{
     padding: 3% 0;
     background-color: #DFD189;
 }
 
-.img-chiquita{
+.image-info{
     max-width: 100%;
 
 }
