@@ -1,121 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Rampart+One&display=swap');
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
-.image img{
-	width: 100%;
-	height: 0px auto;
-	opacity: 0.80;
+
+body{
+    background: #E5DAA0;
 }
+
+/*CUSTOM SCROLLBAR*/
+::-webkit-scrollbar{
+    background: #fff;
+  }
+  ::-webkit-scrollbar-track{
+    background-color: #fff;
+  }
+  ::-webkit-scrollbar-thumb{
+    background: #c2b678;
+    border-radius: 3px;
+    transition: 0.5s !important;
+  }
+  ::-webkit-scrollbar-thumb:hover{
+    background: #E6DBA1;
+    transition: 0.5s !important;
+  }
+  ::-webkit-scrollbar-corner{
+    border-radius: 10px;
+  }
+
+.textito{
+    font-family: 'Rampart One', cursive;
+    text-align: center;
+}
+
+.spaces-2{
+    padding: 3% 0;
+    background-color: #DFD189;
+}
+
+.image-info{
+    max-width: 100%;
+
+}
+
+.div-info{
+    padding: 0;
+    margin: 0;
+}
+
 .yellow-space{
     height: 100px;
     width: 100%;
     background: #E5DAA0;
     padding: 10px 50px 20px;
 }
-body{
-    background: #E5DAA0;
-}
-.img-chiquita{
-    height: 100px;
-    width: 100%;
-    padding: 10px 50px 20px;
-}
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap');
-* {
-    padding: 0;
-    margin: 0;
-    font-family: 'Quicksand', sans-serif;
-}
-.ul_ {
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    width: 100%;
-    text-align: center;
+
+.mapa{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.ul_li {
-    position: relative;
-    list-style: none;
-    display: inline-block;
-    width: 80px;
-    height: 80px;
-    cursor: pointer;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .5);
-    margin-right: 30px;
-    border-radius: 16px;
-    overflow: hidden;
-}
-
-.ul_li::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    transition: .9s;
-    z-index: -1;
-}
-
-.ul_li:hover::before {
-    left: 0;
-}
-
-.ul_li_a {
-    position: relative;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 30px;
-    line-height: 80px;
-    transition: .9s;
-    transform: rotateY(0);
-}
-
-.ul_li:nth-child(1) a {
-    color: #ff6c0c;
-}
-
-.ul_li:nth-child(1):hover::before {
-    background: #ff6c0c;
-}
-
-.ul_li:nth-child(2) a {
-    color: #ff6c0c;
-}
-
-.ul_li:nth-child(2):hover::before {
-    background: #ff6c0c;
-}
-
-.ul_li:nth-child(3) a {
-    color: #ff6c0c;
-}
-
-.ul_li:nth-child(3):hover::before {
-    background: #ff6c0c;
-}
-
-.ul_li:nth-child(4) a {
-    color: #ff6c0c;
-}
-
-.ul_li:nth-child(4):hover::before {
-    background: #ff6c0c;
-}
-
-.ul_li:nth-child(5) a {
-    color: #ff6c0c;
-} 
-
-.ul_li:nth-child(5):hover::before {
-    background: #ff6c0c;
-}
-
-.ul_li:hover a {
+/****GO TO UP BUTTON**/
+#myBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: #0D6EFD; /* Set a background color */
+    color: #000; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 50px; /* Rounded corners */
+    font-size: 18px; /* Increase font size */
+  }
+  
+  #myBtn:hover {
+    background-color: #0A58CA; /* Add a dark-grey background on hover */
     color: #fff;
-    font-size: 40px;
-    transform: rotateY(360deg);
-}
+  }
