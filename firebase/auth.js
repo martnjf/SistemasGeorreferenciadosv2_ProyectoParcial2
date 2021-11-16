@@ -1,6 +1,4 @@
-import { auth } from 'https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js';
-
-auth.onAuthStateChanged( user =>{
+fbauth.onAuthStateChanged( user =>{
   if(user){
       console.log('Usuario entró');
 
@@ -27,9 +25,9 @@ registerform.addEventListener('submit',(e)=>{
   const mail = registerform['rmail'].value;
   const password = registerform['rpassword'].value;
 
-  auth.createUserWithEmailAndPassword(mail,password).then( cred =>{
+  fbauth.createUserWithEmailAndPassword(mail,password).then( cred =>{
 
-      return db.collection('usuarios').doc(cred.user.uid).set({
+      return fbdb.collection('usuarios').doc(cred.user.uid).set({
           nombre: registerform['rnombre'].value,
           telefono: registerform['rtelefono'].value,
           direccion: registerform['rdireccion'].value
@@ -37,9 +35,9 @@ registerform.addEventListener('submit',(e)=>{
   }).then( ()=>{
       $('#registermodal').modal('hide');
       registerform.reset();
-      registerform.querySelector('.error').innerHTML = '';
+      //registerform.querySelector('.error').innerHTML = '';
   }).catch( err => {
-      registerform.querySelector('.error').innerHTML = mensajeError(err.code);
+      //registerform.querySelector('.error').innerHTML = mensajeError(err.code);
   });
 });
 
@@ -47,7 +45,7 @@ const salir = document.getElementById('salir');
 
 salir.addEventListener('click', (e)=>{
   e.preventDefault();
-  auth.signOut().then(()=>{
+  fbauth.signOut().then(()=>{
       alert("El usuario ha salido del sistema");
   });
 });
@@ -81,21 +79,21 @@ loginform.addEventListener('submit',(e)=>{
 
   console.log('CLICK')
 
-  auth.signInWithEmailAndPassword(mail,password).then( cred =>{
+  fbauth.signInWithEmailAndPassword(mail,password).then( cred =>{
       //$('#loginmodal').modal('hide');
       loginform.reset();
-      loginform.querySelector('.error').innerHTML = '';
+      //loginform.querySelector('.error').innerHTML = '';
   }).catch( err => {
-      loginform.querySelector('.error').innerHTML = mensajeError(err.code);
+      //loginform.querySelector('.error').innerHTML = mensajeError(err.code);
       console.log(err);
   });
 });
 
 /*
 entrarGoogle = () => {
-  var provider = new firebase.auth.GoogleAuthProvider();
+  var provider = new fbauth.GoogleAuthProvider();
 
-  firebase.auth().signInWithPopup(provider).then(function(result) {
+  fbauth().signInWithPopup(provider).then(function(result) {
 
       var token = result.credential.accessToken;
       console.log(token);
