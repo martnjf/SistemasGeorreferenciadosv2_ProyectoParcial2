@@ -17,28 +17,35 @@ fbauth.onAuthStateChanged( user =>{
   }
 });
 
-const registerform = document.getElementById('registerform');
+const registerform = document.getElementById('formReg');
 
 registerform.addEventListener('submit',(e)=>{
   e.preventDefault();
 
-  const mail = registerform['rmail'].value;
-  const password = registerform['rpassword'].value;
+  const mail = registerform['inputEmailR'].value;
+  const password = registerform['inputPassR'].value;
+  const repPassword = registerform['inputPass2R'].value;
 
-  fbauth.createUserWithEmailAndPassword(mail,password).then( cred =>{
+  if(password == repPassword){
+    fbauth.createUserWithEmailAndPassword(mail,password).then( cred =>{
 
       return fbdb.collection('usuarios').doc(cred.user.uid).set({
-          nombre: registerform['rnombre'].value,
-          telefono: registerform['rtelefono'].value,
-          direccion: registerform['rdireccion'].value
+        nombre: registerform['inputNameR'].value,
+        direccion: registerform['inputAddR'].value,
+        codigopostal: registerform['inputCPR'].value,
+        telefono: registerform['inputTelR'].value,
       });
-  }).then( ()=>{
-      $('#registermodal').modal('hide');
+    }).then( ()=>{
+      //$('#registermodal').modal('hide');
       registerform.reset();
+      alert('Registro exitoso');
       //registerform.querySelector('.error').innerHTML = '';
-  }).catch( err => {
+    }).catch( err => {
       //registerform.querySelector('.error').innerHTML = mensajeError(err.code);
-  });
+    });
+  } else {
+    alert('Las contraseñas no coinciden');
+  }  
 });
 
 const salir = document.getElementById('salir');
