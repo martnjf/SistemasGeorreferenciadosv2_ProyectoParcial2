@@ -1,3 +1,16 @@
+const loggedOutLinks = document.querySelectorAll(".logged-out");
+const loggedInLinks = document.querySelectorAll(".logged-in");
+
+const loginCheck = (user) => {
+  if (user) {
+    loggedInLinks.forEach((link) => (link.style.display = "block"));
+    loggedOutLinks.forEach((link) => (link.style.display = "none"));
+  } else {
+    loggedInLinks.forEach((link) => (link.style.display = "none"));
+    loggedOutLinks.forEach((link) => (link.style.display = "block"));
+  }
+};
+
 fbauth.onAuthStateChanged( user =>{
   if(user){
       console.log('Usuario entró');
@@ -11,13 +24,13 @@ fbauth.onAuthStateChanged( user =>{
       uid = user.uid;  
       
       console.log(name,email,photoUrl,emailVerified,uid);
+      loginCheck(user);
     } else {
       console.log('Usuario salió');
-      //configuraMenu();
+      loginCheck(user);
   }
 });
 
-/*
 const salir = document.getElementById('salir');
 
 salir.addEventListener('click', (e)=>{
@@ -27,6 +40,7 @@ salir.addEventListener('click', (e)=>{
   });
 });
 
+/*
 function mensajeError(codigo) {
 
   let mensaje = '';
