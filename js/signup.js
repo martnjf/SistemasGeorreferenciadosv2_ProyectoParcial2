@@ -17,9 +17,9 @@ registerform.addEventListener('submit',(e)=>{
         telefono: registerform['inputTelR'].value,
       });
     }).then( ()=>{
-      //$('#registermodal').modal('hide');
       registerform.reset();
       alert('Registro exitoso');
+      window.location.href = "http://127.0.0.1:5502/SistemasGeorreferenciadosv2_ProyectoParcial2/index.html";
       //registerform.querySelector('.error').innerHTML = '';
     }).catch( err => {
       //registerform.querySelector('.error').innerHTML = mensajeError(err.code);

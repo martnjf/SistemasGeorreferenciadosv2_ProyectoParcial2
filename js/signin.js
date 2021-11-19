@@ -8,7 +8,9 @@ loginform.addEventListener('submit',(e)=>{
   console.log('CLICK')
 
   fbauth.signInWithEmailAndPassword(mail,password).then( cred =>{
-      loginform.reset();
+      loginform.reset();      
+      alert('Bienvenido :D');
+      window.location.href = "http://127.0.0.1:5502/SistemasGeorreferenciadosv2_ProyectoParcial2/index.html";
       //loginform.querySelector('.error').innerHTML = '';
   }).catch( err => {
       //loginform.querySelector('.error').innerHTML = mensajeError(err.code);

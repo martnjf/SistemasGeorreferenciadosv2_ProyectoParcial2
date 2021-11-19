@@ -24,6 +24,7 @@ fbauth.onAuthStateChanged( user =>{
       uid = user.uid;  
       
       console.log(name,email,photoUrl,emailVerified,uid);
+      
       loginCheck(user);
     } else {
       console.log('Usuario salió');
@@ -36,7 +37,8 @@ const salir = document.getElementById('salir');
 salir.addEventListener('click', (e)=>{
   e.preventDefault();
   fbauth.signOut().then(()=>{
-      alert("El usuario ha salido del sistema");
+      alert("Sesión finalizada");
+      window.location.href = "http://127.0.0.1:5502/SistemasGeorreferenciadosv2_ProyectoParcial2/index.html";
   });
 });
 
