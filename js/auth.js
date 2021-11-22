@@ -1,3 +1,4 @@
+
 const loggedOutLinks = document.querySelectorAll(".logged-out");
 const loggedInLinks = document.querySelectorAll(".logged-in");
 
@@ -11,23 +12,34 @@ const loginCheck = (user) => {
   }
 };
 
-fbauth.onAuthStateChanged( user =>{
+fbauth.onAuthStateChanged( user => {
   if(user){
       console.log('Usuario entró');
-
-      var name, email, photoUrl, uid, emailVerified;
-
-      name = user.displayName;
-      email = user.email;
-      photoUrl = user.photoURL;
-      emailVerified = user.emailVerified;
-      uid = user.uid;  
       
-      console.log(name,email,photoUrl,emailVerified,uid);
+      if(window.location.pathname == 
+        '/SistemasGeorreferenciadosv2_ProyectoParcial2/views/registromascota.html'){
+        fbdb.collection("mascotas").get()
+        .then((snapshot) => {
+          setupPets(snapshot.docs);
+        }, err => {
+          console.log(err.message);
+        });
+      }    
       
       loginCheck(user);
+
+      var email, uid;
+      email = user.email;
+      uid = user.uid;  
+      console.log(email,uid);
+      
     } else {
       console.log('Usuario salió');
+      if(window.location.pathname == 
+        '/SistemasGeorreferenciadosv2_ProyectoParcial2/views/registromascota.html'){
+        setupPets([]);
+      }
+
       loginCheck(user);
   }
 });
