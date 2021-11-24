@@ -14,38 +14,21 @@ const loginCheck = (user) => {
 
 fbauth.onAuthStateChanged( user => {
   if(user){
-      console.log('Usuario entró');
-      
-      if(window.location.pathname == 
-        '/SistemasGeorreferenciadosv2_ProyectoParcial2/views/registromascota.html'){
-        fbdb.collection("mascotas").get()
-        .then((snapshot) => {
-          setupPets(snapshot.docs);
-        }, err => {
-          console.log(err.message);
-        });
-      }    
-      
-      loginCheck(user);
+    console.log('Usuario entró');
+    loginCheck(user);
 
-      var email, uid;
-      email = user.email;
-      uid = user.uid;  
-      console.log(email,uid);
-      
-    } else {
-      console.log('Usuario salió');
-      if(window.location.pathname == 
-        '/SistemasGeorreferenciadosv2_ProyectoParcial2/views/registromascota.html'){
-        setupPets([]);
-      }
-
-      loginCheck(user);
+    var email, uid;
+    email = user.email;
+    uid = user.uid;  
+    console.log(email,uid);
+    
+  } else {
+    console.log('Usuario salió');
+    loginCheck(user);
   }
 });
 
 const salir = document.getElementById('salir');
-
 salir.addEventListener('click', (e)=>{
   e.preventDefault();
   fbauth.signOut().then(()=>{
