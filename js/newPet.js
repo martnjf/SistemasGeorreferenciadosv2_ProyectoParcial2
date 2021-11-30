@@ -1,5 +1,6 @@
 const registerform = document.getElementById('formPetModal');
-const petsContainer = document.querySelector(".pets");
+var petsContainer = document.getElementById("petsContainer");
+var petImage = document.getElementById('petImg');
 
 let editStatus = false;
 let id = '';
@@ -27,11 +28,16 @@ const updatePet = (id, updatedPet) => fbdb.collection('mascotas').doc(id).update
 
 // Obtener mascotas
 window.addEventListener('DOMContentLoaded', async (e) => { 
+
+  let html = '';
   await onGetPets((querySnapshot) => {
-      petsContainer.innerHTML = "";
+      //petsContainer.innerHTML = "";
       querySnapshot.forEach((doc) => {
+
         const pets = doc.data();
-        petsContainer += `
+        pets.id = doc.id;
+
+        const template = `
         <div class="card my-4">
           <div class="card-body">
             <div class="row">
@@ -49,49 +55,52 @@ window.addEventListener('DOMContentLoaded', async (e) => {
             </div>
           </div>
           <div class="card-footer text-end">
-              <button type="button" class="btn btn-info btn-date" data-id="${doc.id}">Solicitar consulta</button>
-              <button type="button" class="btn btn-warning btn-edit" data-id="${doc.id}">🖉 Editar datos</button>
-              <button type="button" class="btn btn-danger btn-delete" data-id="${doc.id}">🗑 Borrar</button>
+              <button type="button" class="btn btn-info btn-date" data-id="${pets.id}">Solicitar consulta</button>
+              <button type="button" class="btn btn-warning btn-edit" data-id="${pets.id}">🖉 Editar datos</button>
+              <button type="button" class="btn btn-danger btn-delete" data-id="${pets.id}">🗑 Borrar</button>
           </div>
         </div>
         `;
+        html += template;
       });
+      petsContainer.innerHTML = html;
 
-    const btnsDelete = petsContainer.querySelectorAll(".btn-delete");
+    const btnsDelete = document.querySelectorAll(".btn-delete");
     btnsDelete.forEach((btn) =>
       btn.addEventListener("click", async (e) => {
         console.log(e.target.dataset.id);
         try {
           await deletePet(e.target.dataset.id);
+          alert('Mascota borrada');
+          window.location.reload();
         } catch (error) {
           console.log(error);
         }
       })
     );
 
-    const btnsEdit = petsContainer.querySelectorAll(".btn-edit");
+    const btnsEdit = document.querySelectorAll(".btn-edit");
     btnsEdit.forEach((btn) => {
       btn.addEventListener("click", async (e) => {
         try {
-          const doc = await getTask(e.target.dataset.id);
+          const doc = await getPet(e.target.dataset.id);
           const pets = doc.data();
-
-          /*const imagen = registerform['petImage'].value;
-          const nombre = registerform['petName'].value;
+          
           var select = document.getElementById('selectGender');
-          const sexo = select.options[select.selectedIndex].text;
-          const nacimiento = registerform['date'].value;
-          const especie = registerform['petSpecie'].value;
-          const color = registerform['petColor'].value;
-          const senias = registerform['petSign'].value;
+          const sexo = select.options[select.selectedIndex];
 
-          nombre = pets.nombre;
-          imagen = pets.imagen;
-          sexo = pets.sexo;*/
+          petImage.src = pets.imagen;
+          registerform['petImage'].value = pets.imagen;
+          registerform['petName'].value = pets.nombre;
+          sexo.text = pets.sexo
+          registerform['date'].value = pets.nacimiento;
+          registerform['petSpecie'].value = pets.especie;
+          registerform['petColor'].value = pets.color;
+          registerform['petSign'].value = pets.senias;
 
           editStatus = true;
           id = doc.id;
-          taskForm["btnPetForm"].innerText = "Actualizar datos";
+          registerform["btnPetForm"].innerText = "Actualizar datos";
 
         } catch (error) {
           console.log(error);
@@ -124,6 +133,7 @@ registerform.addEventListener('submit', async(e) => {
         color,
         senias
       );
+      window.location.reload();
     } else {
       await updatePet(id, {
         imagen,
@@ -134,7 +144,7 @@ registerform.addEventListener('submit', async(e) => {
         color,
         senias
       });
-
+      window.location.reload();
       editStatus = false;
       id = '';
       registerform['btnPetForm'].innerHTML = 'Registrar Mascota';
