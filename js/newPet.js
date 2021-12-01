@@ -1,12 +1,21 @@
+let id = '';
+
+fbauth.onAuthStateChanged( user => {
+  id = user.uid;  
+  console.log('Usuario nuevo', id )
+});
+
+
 const registerform = document.getElementById('formPetModal');
 var petsContainer = document.getElementById("petsContainer");
 var petImage = document.getElementById('petImg');
 
 let editStatus = false;
-let id = '';
+let petID = '';
 
-const savePet = (imagen, nombre, sexo, nacimiento, especie, color, senias) =>
+const savePet = (id, imagen, nombre, sexo, nacimiento, especie, color, senias) =>
   fbdb.collection("mascotas").doc().set({
+    id,
     imagen,
     nombre,
     sexo,
@@ -20,20 +29,23 @@ const getPets = () => fbdb.collection("mascotas").get();
 
 const onGetPets = (callback) => fbdb.collection("mascotas").onSnapshot(callback);
 
-const deletePet = (id) => fbdb.collection("mascotas").doc(id).delete();
+const deletePet = (petID) => fbdb.collection("mascotas").doc(petID).delete();
 
-const getPet = (id) => fbdb.collection("mascotas").doc(id).get();
+const getPet = (petID) => fbdb.collection("mascotas").doc(petID).get();
 
-const updatePet = (id, updatedPet) => fbdb.collection('mascotas').doc(id).update(updatedPet);
+const updatePet = (petID, updatedPet) => fbdb.collection('mascotas').doc(petID).update(updatedPet);
+
+const saveCoords = (id, updatedCords) => fbdb.collection('usuarios').doc(id).update(updatedCords);
 
 // Obtener mascotas
 window.addEventListener('DOMContentLoaded', async (e) => { 
 
   let html = '';
   await onGetPets((querySnapshot) => {
-      //petsContainer.innerHTML = "";
-      querySnapshot.forEach((doc) => {
+ 
+    querySnapshot.forEach((doc) => {
 
+      if(id == doc.data().id){
         const pets = doc.data();
         pets.id = doc.id;
 
@@ -62,8 +74,11 @@ window.addEventListener('DOMContentLoaded', async (e) => {
         </div>
         `;
         html += template;
-      });
-      petsContainer.innerHTML = html;
+      }
+
+      
+    });
+    petsContainer.innerHTML = html;
 
     const btnsDelete = document.querySelectorAll(".btn-delete");
     btnsDelete.forEach((btn) =>
@@ -86,20 +101,20 @@ window.addEventListener('DOMContentLoaded', async (e) => {
           const doc = await getPet(e.target.dataset.id);
           const pets = doc.data();
           
-          var select = document.getElementById('selectGender');
-          const sexo = select.options[select.selectedIndex];
+          //var select = document.getElementById('selectGender');
+          //const sexo = select.options[select.selectedIndex];
 
           petImage.src = pets.imagen;
           registerform['petImage'].value = pets.imagen;
           registerform['petName'].value = pets.nombre;
-          sexo.text = pets.sexo
+          //sexo.text = pets.sexo
           registerform['date'].value = pets.nacimiento;
           registerform['petSpecie'].value = pets.especie;
           registerform['petColor'].value = pets.color;
           registerform['petSign'].value = pets.senias;
 
           editStatus = true;
-          id = doc.id;
+          petID = doc.id;
           registerform["btnPetForm"].innerText = "Actualizar datos";
 
         } catch (error) {
@@ -107,6 +122,34 @@ window.addEventListener('DOMContentLoaded', async (e) => {
         }
       });
     });
+
+    const btnsDate = document.querySelectorAll(".btn-date");
+    btnsDate.forEach((btn) => 
+      btn.addEventListener("click", e => {
+        console.log(e.target.dataset.id);
+
+        let options = {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
+        };
+        
+        function success(pos) {
+          var crd = pos.coords;
+          saveCoords(id,{
+            lat: crd.latitude,
+            lng: crd.longitude
+          });
+          alert('Consulta solicitada');
+        };
+        
+        function error(err) {
+          console.warn('ERROR(' + err.code + '): ' + err.message);
+        };
+        
+        navigator.geolocation.getCurrentPosition(success, error, options);
+      })
+    );
   });
 });
 
@@ -125,6 +168,7 @@ registerform.addEventListener('submit', async(e) => {
   try{
     if(!editStatus){
       await savePet(
+        id,
         imagen, 
         nombre,
         sexo,
@@ -135,7 +179,7 @@ registerform.addEventListener('submit', async(e) => {
       );
       window.location.reload();
     } else {
-      await updatePet(id, {
+      await updatePet(petID, {
         imagen,
         nombre,
         sexo,
@@ -146,7 +190,7 @@ registerform.addEventListener('submit', async(e) => {
       });
       window.location.reload();
       editStatus = false;
-      id = '';
+      petID = '';
       registerform['btnPetForm'].innerHTML = 'Registrar Mascota';
     }
     console.log("Mascota registrada :D");
@@ -157,8 +201,5 @@ registerform.addEventListener('submit', async(e) => {
   }
 });
 
-fbauth.onAuthStateChanged( user => {
-  console.log('Usuario', user.uid )
-});
 // GUARDAR EL UID DEL USUARIO EN LA MASCOTA
 // CUANDO SE HAGA EL GET, COMPARAR EL UID DEL USUARIO LOGGEADO CON EL DE LAS MASCOTAS EN LA COLECCIÓN

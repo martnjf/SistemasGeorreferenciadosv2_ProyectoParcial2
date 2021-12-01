@@ -15,6 +15,8 @@ registerform.addEventListener('submit',(e)=>{
         direccion: registerform['inputAddR'].value,
         codigopostal: registerform['inputCPR'].value,
         telefono: registerform['inputTelR'].value,
+        lat: 0,
+        lng: 0
       });
     }).then( ()=>{
       registerform.reset();
