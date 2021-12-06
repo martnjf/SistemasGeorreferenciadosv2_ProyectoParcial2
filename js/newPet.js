@@ -141,6 +141,7 @@ window.addEventListener('DOMContentLoaded', async (e) => {
             lng: crd.longitude
           });
           alert('Consulta solicitada');
+          window.location.href = "http://127.0.0.1:5502/SistemasGeorreferenciadosv2_ProyectoParcial2/views/ruta.html";
         };
         
         function error(err) {
