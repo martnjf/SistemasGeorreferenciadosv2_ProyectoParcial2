@@ -1,6 +1,7 @@
 
 const loggedOutLinks = document.querySelectorAll(".logged-out");
 const loggedInLinks = document.querySelectorAll(".logged-in");
+var uid;
 
 const loginCheck = (user) => {
   if (user) {
@@ -17,9 +18,9 @@ fbauth.onAuthStateChanged( user => {
     console.log('Usuario entró');
     loginCheck(user);
 
-    var email, uid;
+    var email;
     email = user.email;
-    uid = user.uid;  
+    uid = user.uid;
     console.log(email,uid);
     
   } else {
